@@ -2,7 +2,6 @@
 pragma solidity ^0.8.9;
 
 contract Dappazon {
-     
     address public owner;
 
     struct Item {
@@ -15,10 +14,15 @@ contract Dappazon {
         uint256 rating;
     }
 
-    mapping (uint256 => Item) public items;
+    mapping(uint256 => Item) public items;
 
-    constructor(){
-        owner=msg.sender;
+    modifier onlyOwner() {
+        require(msg.sender == owner);
+        _;
+    }
+
+    constructor() {
+        owner = msg.sender;
     }
 
     //list products
@@ -30,27 +34,23 @@ contract Dappazon {
         string memory _image,
         uint256 _cost,
         uint _rating
-        
-
-    ) public{
+    ) public onlyOwner {
         //create item
-        Item memory item=Item(_id,
-        _name,
-        _lecturer,
-        _category,
-        _image,
-        _cost,
-        _rating
+        Item memory item = Item(
+            _id,
+            _name,
+            _lecturer,
+            _category,
+            _image,
+            _cost,
+            _rating
         );
 
         //save item to blockchain
         items[_id] = item;
-    } 
-
+    }
 
     //buy products
 
     //Withdraw products
-
 }
- 
