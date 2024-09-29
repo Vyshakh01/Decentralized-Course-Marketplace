@@ -4,6 +4,15 @@ const tokens = (n) => {
   return ethers.utils.parseUnits(n.toString(), "ether");
 };
 
+const ID = 1;
+const NAME = "React JS";
+const LECTURER = "Angela Yu";
+const CATEGORY = "IT";
+const IMAGE =
+  "https://ipfs.io/ipfs/QmTYEboq8raiBs7GTUg2yLXB3PMz6HuBNgNfSZBx5Msztg/shoes.jpg";
+const COST = tokens(1);
+const RATING = 4;
+
 describe("Dappazon", () => {
   let dappazon;
   let deployer, buyer;
@@ -28,14 +37,21 @@ describe("Dappazon", () => {
     beforeEach(async () => {
       transaction = await dappazon
         .connect(deployer)
-        .list(1, "React JS", "Angela Yu", "IT", "IMAGE", 2, 4);
+        .list(ID, NAME, LECTURER, CATEGORY, IMAGE, COST, RATING);
 
       await transaction.wait();
     });
 
     it("Return item attributes", async () => {
-      const item = await dappazon.items(1);
-      expect(item.id).to.equal(1);
+      const item = await dappazon.items(ID);
+
+      expect(item.id).to.equal(ID);
+      expect(item.name).to.equal(NAME);
+      expect(item.lecturer).to.equal(LECTURER);
+      expect(item.category).to.equal(CATEGORY);
+      expect(item.image).to.equal(IMAGE);
+      expect(item.cost).to.equal(COST);
+      expect(item.rating).to.equal(RATING);
     });
   });
 });
