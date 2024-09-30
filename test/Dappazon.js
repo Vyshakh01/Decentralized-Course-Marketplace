@@ -53,5 +53,9 @@ describe("Dappazon", () => {
       expect(item.cost).to.equal(COST);
       expect(item.rating).to.equal(RATING);
     });
+
+    it("Emits List event", () => {
+      expect(transaction).to.emit(dappazon, "List");
+    });
   });
 });

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
+//listing version
 pragma solidity ^0.8.9;
 
 contract Dappazon {
@@ -16,6 +17,7 @@ contract Dappazon {
 
     mapping(uint256 => Item) public items;
 
+    event List(string name, uint256 cost);
     modifier onlyOwner() {
         require(msg.sender == owner);
         _;
@@ -48,6 +50,9 @@ contract Dappazon {
 
         //save item to blockchain
         items[_id] = item;
+
+        //emit list item
+        emit List(_name, _cost);
     }
 
     //buy products
